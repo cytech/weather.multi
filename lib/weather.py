@@ -23,7 +23,7 @@ class MAIN():
         if mode.startswith('loc'):
             self.search_location()
         else:
-            location, locationid, locationlat, locationlon = self.get_location()
+            location, locationid, locationlat, locationlon = self.get_location(mode)
             if locationid > 0:
                 self.get_forecast(location, locationid, locationlat, locationlon)
             else:
@@ -62,7 +62,7 @@ class MAIN():
                 log('no locations found')
                 dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
 
-    def get_location(self):
+    def get_location(self, mode):
         location = ADDON.getSettingString('loc%s' % mode)
         locationid = ADDON.getSettingInt('loc%sid' % mode)
         locationlat = ADDON.getSettingNumber('loc%slat' % mode)
@@ -109,7 +109,7 @@ class MAIN():
             url = AURL % daily_string
             add_weather = self.get_data(url)
             log('weatherbit data: %s' % add_weather)
-            if 'error' in add_weather:
+            if not add_weather or (add_weather and 'error' in add_weather):
                 add_weather = ''
         yahoo.Weather.get_weather(data, loc, locid)
         if add_weather and add_weather != '':
