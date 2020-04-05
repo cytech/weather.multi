@@ -11,7 +11,7 @@
 		<summary lang="en_GB">Weather forecast from several providers</summary>
 		<description lang="en_GB">Weather forecast provided by Yahoo, Weatherbit and Openweathermap</description>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<license>GPL-2.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=352028</forum>
 		<source>https://gitlab.com/ronie/weather.multi/</source>
 		<assets>
