@@ -18,5 +18,8 @@
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
+		<news>- code cleanup
+- refactor code
+- fix maps</news>
 	</extension>
 </addon>
