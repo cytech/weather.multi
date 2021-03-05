@@ -267,3 +267,23 @@ msgstr ""
 msgctxt "#32307"
 msgid "Waning Crescent"
 msgstr ""
+
+msgctxt "#32308"
+msgid "Use Wunderground PWS API for current PWS data"
+msgstr ""
+
+msgctxt "#32309"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#32310"
+msgid "Get Wunderground PWS api key -> wunderground.com/member/api-keys"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Station ID"
+msgstr ""
+
+msgctxt "#32312"
+msgid "Use Wunderground PWS API for Forecast data"
+msgstr ""

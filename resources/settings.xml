@@ -173,6 +173,53 @@
 					</control>
 				</setting>
 			</group>
+			<group id="2" label="32310">
+				<setting help="" id="WUpwsAdd" label="32308" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="WUpwsAPI" label="32309" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="WUpwsAdd">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32110</heading>
+					</control>
+				</setting>
+				<setting help="" id="WUpwsStationID" label="32311" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="WUpwsAdd">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32110</heading>
+					</control>
+				</setting>
+				<setting help="" id="WUpwsFAdd" label="32312" parent="WUpwsAdd" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="WUpwsAdd">true</condition>
+						</dependency>
+					</dependencies>
+				</setting>
+			</group>
 		</category>
 		<category id="3" label="32103">
 			<group id="1" label="32135">

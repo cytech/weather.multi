@@ -8,7 +8,7 @@ DEFAULT KODI WEATHER LABELS
 ---------------------------
 
 
-CURRENT
+CURRENT (Yahoo)
 -------
 Current.Location
 Current.Condition
@@ -22,8 +22,31 @@ Current.UVIndex
 Current.ConditionIcon      (eg. '28.png')
 Current.FanartCode
 
+CURRENT (WundergroundPWS)
+-------
+Current.DewPoint
+Current.FeelsLike
+Current.HeatIndex
+Current.Humidity
+Current.Latitude    (station latitude)
+Current.Longitude    (station longitude)
+Current.LocalDate
+Current.LocalTime
+Current.Location
+Current.Precipitation
+Current.Pressure
+Current.SolarRadiation
+Current.Temperature
+Current.UVIndex
+Current.Wind
+Current.WindChill
+Current.WindDegree
+Current.WindDirection
+Current.WindGust
 
-DAY [0-6]
+
+
+DAY [0-6] (Yahoo)
 ---------
 Day%i.Title
 Day%i.HighTemp
@@ -46,7 +69,7 @@ EXTENDED WEATHER LABELS
 -----------------------
 
 
-FORECAST
+FORECAST (Yahoo)
 --------
 Forecast.IsFetched
 Forecast.City
@@ -56,7 +79,16 @@ Forecast.Longitude
 Forecast.Updated           (date and time the forecast was retrieved by yahoo)
 
 
-CURRENT
+FORECAST (WundergroundPWS)
+--------
+Forecast.IsFetched
+Forecast.City
+Forecast.State
+Forecast.Country
+Forecast.Updated           (date and time the forecast was retrieved by yahoo)
+
+
+CURRENT (Yahoo)
 -------
 Current.IsFetched
 Current.Visibility         (visible distance)
@@ -66,7 +98,7 @@ Current.Precipitation      (probability)
 Current.Cloudiness         (cloud coverage)
 
 
-TODAY
+TODAY (Yahoo)
 -----
 Today.IsFetched
 Today.Sunrise
@@ -74,7 +106,7 @@ Today.Sunset
 Today.MoonPhase
 
 
-HOURLY [1-24]
+HOURLY [1-24] (Yahoo)
 -------------
 Hourly.IsFetched
 Hourly.%i.Time             (eg. '12:00')
@@ -110,6 +142,30 @@ Daily.%i.Precipitation     (probability of precipitation)
 Daily.%i.HighTemperature   (highest temperature that will be reached today)
 Daily.%i.LowTemperature    (lowest temperature that will be reached today)
 
+
+DAILY [1-5] (WundergroundPWS)
+------------
+Daily.%i.FanartCode
+Daily.%i.HighTemperature   (highest temperature that will be reached today)
+Daily.%i.Humidity
+Daily.%i.LongDate          (eg. '1 January')
+Daily.%i.LongDay           (eg. 'Monday')
+Daily.%i.LowTemperature    (lowest temperature that will be reached today)
+Daily.%i.MoonPhase
+Daily.%i.MoonRise
+Daily.%i.MoonSet
+Daily.%i.Outlook           (eg. 'Mostly Cloudy')
+Daily.%i.OutlookIcon
+Daily.%i.Precipitation     (probability of precipitation)
+Daily.%i.ShortDate         (eg. '1 Jan')
+Daily.%i.ShortDay          (eg. 'Mon')
+Daily.%i.ShortWindDirection
+Daily.%i.SunRise
+Daily.%i.SunSet
+Daily.%i.WindDegree
+Daily.%i.WindDirection
+Daily.%i.WindSpeed
+Daily.IsFetched
 
 DAILY [1-16] (Weatherbit)
 ------------
