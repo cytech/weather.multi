@@ -4,6 +4,13 @@ from .providers import yahoo
 from .providers import weatherbit
 from .providers import openweathermap
 from .providers import wundergroundpws
+from .ambient_api import ambientapi
+
+# ambient personal apikey - 417e864a9115435f8d4b1e56e91410d176a4be2f129e4bffa1bea5adf3e9f54c
+# ambient appkey - 92a3860f17ca422e8157ad60313341ac4130778b9c4644eaafe6bcf83a874388
+
+AMBLISTDEVSURL = 'https://api.ambientweather.net/v1/devices?applicationKey=92a3860f17ca422e8157ad60313341ac4130778b9c4644eaafe6bcf83a874388&apiKey=417e864a9115435f8d4b1e56e91410d176a4be2f129e4bffa1bea5adf3e9f54c'
+AMBDEVDATA = 'https://api.ambientweather.net/v1/devices/48:3F:DA:55:B4:17?apiKey=417e864a9115435f8d4b1e56e91410d176a4be2f129e4bffa1bea5adf3e9f54c&applicationKey=92a3860f17ca422e8157ad60313341ac4130778b9c4644eaafe6bcf83a874388&limit=1'
 
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;woeids=%%5B%s%%5D'
