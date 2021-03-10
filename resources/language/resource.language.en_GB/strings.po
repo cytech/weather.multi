@@ -280,10 +280,6 @@ msgctxt "#32310"
 msgid "Get Wunderground PWS api key -> wunderground.com/member/api-keys"
 msgstr ""
 
-msgctxt "#32311"
-msgid "Station ID"
-msgstr ""
-
-msgctxt "#32312"
-msgid "Use Wunderground PWS API for Forecast data"
+msgctxt "#32313"
+msgid "Enter the nearest city. For PWS enter pws:stationId"
 msgstr ""

@@ -73,30 +73,30 @@
 						<data>RunScript(weather.multi,loc5)</data>
 					</control>
 				</setting>
-				<setting help="" id="loc1id" type="integer">
+				<setting help="" id="loc1id" type="string">
 					<default>-1</default>
 					<visible>false</visible>
-					<control format="integer" type="edit"/>
+					<control format="string" type="edit"/>
 				</setting>
-				<setting help="" id="loc2id" type="integer">
+				<setting help="" id="loc2id" type="string">
 					<default>-1</default>
 					<visible>false</visible>
-					<control format="integer" type="edit"/>
+					<control format="string" type="edit"/>
 				</setting>
-				<setting help="" id="loc3id" type="integer">
+				<setting help="" id="loc3id" type="string">
 					<default>-1</default>
 					<visible>false</visible>
-					<control format="integer" type="edit"/>
+					<control format="string" type="edit"/>
 				</setting>
-				<setting help="" id="loc4id" type="integer">
+				<setting help="" id="loc4id" type="string">
 					<default>-1</default>
 					<visible>false</visible>
-					<control format="integer" type="edit"/>
+					<control format="string" type="edit"/>
 				</setting>
-				<setting help="" id="loc5id" type="integer">
+				<setting help="" id="loc5id" type="string">
 					<default>-1</default>
 					<visible>false</visible>
-					<control format="integer" type="edit"/>
+					<control format="string" type="edit"/>
 				</setting>
 				<setting help="" id="loc1lat" type="number">
 					<default>0</default>
@@ -193,31 +193,6 @@
 					<control format="string" type="edit">
 						<heading>32110</heading>
 					</control>
-				</setting>
-				<setting help="" id="WUpwsStationID" label="32311" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="WUpwsAdd">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>32110</heading>
-					</control>
-				</setting>
-				<setting help="" id="WUpwsFAdd" label="32312" parent="WUpwsAdd" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="WUpwsAdd">true</condition>
-						</dependency>
-					</dependencies>
 				</setting>
 			</group>
 		</category>

@@ -236,6 +236,8 @@ def convert_datetime(stamp, inpt, outpt, form):
 # inf (input format): 'F' (fahrenheit) or 'C' (celcius)
 # outf (force output format): 'C' (celcius)
 def convert_temp(val, inf, outf=None):
+    if val is None:
+        return 'N/A'
     if inf == 'F':
         #fahrenheit to celcius
         val = (float(val)-32) * 5/9
@@ -266,6 +268,8 @@ def convert_temp(val, inf, outf=None):
 # inf (input format): 'mph' (miles per hour) or 'mps' (metre per seconds)
 # outf (force output format): 'kmh' (kilometre per hour)
 def convert_speed(val, inf, outf=None):
+    if val is None:
+        return 'N/A'
     if inf == 'mph':
         val = float(val) / 2.237
     if outf == 'kmh':
@@ -330,6 +334,8 @@ def KPHTOBFT(spd):
 
 # convert winddirection in degrees to a string (eg. NNW)
 def WIND_DIR(deg):
+    if deg is None:
+        return 10006
     if deg >= 349 or deg <=  11:
         return 71
     elif deg >= 12 and deg <= 33:

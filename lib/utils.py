@@ -40,5 +40,7 @@ def log(txt):
 def set_property(name, value):
     WEATHER_WINDOW.setProperty(name, value)
 
-
+# clear weather window property
+def clear_property(name):
+    WEATHER_WINDOW.clearProperty(name)
 
