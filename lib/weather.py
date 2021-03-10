@@ -150,10 +150,6 @@ class MAIN():
     def get_forecast(self, loc, locid, lat, lon):
         set_property('WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
         log('weather location: %s' % locid)
-        providers = 'provided by Yahoo'
-        if MAPS and MAPID:
-            providers = providers + ', Openweathermaps'
-            openweathermap.Weather.get_weather(lat, lon, ZOOM, MAPID)
 
         retry = 0
         datawu = ''
@@ -164,7 +160,7 @@ class MAIN():
                 if datawu:
                     set_property('Location', datawu['observations'][0]['neighborhood'] + ', '
                                  + datawu['observations'][0]['stationID'])
-                    providers = 'Provided by WeatherUnderground PWS'
+                    providers = '  WUnderground PWS'
                     retry = 0
                     lat = datawu['observations'][0]['lat']
                     lon = datawu['observations'][0]['lon']
@@ -195,6 +191,7 @@ class MAIN():
             while (retry < 6) and (not self.MONITOR.abortRequested()):
                 data = self.get_data(url)
                 if data:
+                    providers = '  Yahoo'
                     break
                 else:
                     self.MONITOR.waitForAbort(10)
@@ -208,6 +205,10 @@ class MAIN():
             yahoo.Weather.get_weather(data, loc, locid)
 
         add_weather = ''
+
+        if MAPS and MAPID:
+            providers = providers + ', Openweathermaps'
+            openweathermap.Weather.get_weather(lat, lon, ZOOM, MAPID)
 
         if WADD and APPID:
             daily_string = 'forecast/daily?key=%s&lat=%s&lon=%s' % (APPID, lat, lon)
