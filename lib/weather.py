@@ -99,7 +99,7 @@ class MAIN():
                         ADDON.setSettingNumber(mode + 'lon', wupwslocs[selected]['longitude'])
                         log('selected location: %s' % str(wupwslocs[selected]))
                 else:
-                    log('no locations found')
+                    log('no wupws locations found')
                     dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
             else:
                 url = LCURL % text
@@ -122,7 +122,7 @@ class MAIN():
                         ADDON.setSettingNumber(mode + 'lon', locs[selected]['lon'])
                         log('selected location: %s' % str(locs[selected]))
                 else:
-                    log('no locations found')
+                    log('no yahoo locations found')
                     dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
 
     def get_location(self, mode):
@@ -222,7 +222,7 @@ class MAIN():
             weatherbit.Weather.get_weather(add_weather)
             providers = providers + ', Weatherbit.io'
             set_property('Hourly.IsFetched', 'true')
-        elif datawu and WUPWSADD and WUPWSAPI and add_weather is '':
+        elif datawu and WUPWSADD and WUPWSAPI and add_weather == '':
             wundergroundpws.Weather.get_daily_weather(datawu)
         else:
             yahoo.Weather.get_daily_weather(data)
