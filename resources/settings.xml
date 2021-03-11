@@ -177,6 +177,11 @@
 				<setting help="" id="WUpwsAdd" label="32308" type="boolean">
 					<level>0</level>
 					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="AWpwsAdd">false</condition>
+						</dependency>
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
 				<setting help="" id="WUpwsAPI" label="32309" type="string">
@@ -188,6 +193,33 @@
 					<dependencies>
 						<dependency type="enable">
 							<condition operator="is" setting="WUpwsAdd">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32110</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="3" label="32316">
+				<setting help="" id="AWpwsAdd" label="32314" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="WUpwsAdd">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="AWpwsAPI" label="32315" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="AWpwsAdd">true</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
