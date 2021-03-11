@@ -25,23 +25,18 @@ First have the Kodi 19 Multi Weather addon installed and configured. then:
    
    2.) Enter your wundergroundpws API key
    
-   3.) Enter your station ID
-   
-   If you would like to use the Wunderground API for the forecast instead of the default Yahoo forecast:
-   
-        - Enable Use Wunderground PWS API for Forecast data
-   
-   
    
 The StationID collects the data from the PWS and displays in the current observation (top area) in Kodi Weather.
 
 Caveats:
 
-This currently only supports a single PWS.
 
 The Wunderground Forecast API only returns daily forecast for 5 days. It does not have more than 5 days or hourly like the Yahoo Forecast.
+To get extended forecast you may want to sign up for the Weatherbit.io api and enable it.
+This will override the Wunderground forecast.
 
-The Wunderground current API does not return sunrise/sunset, so the provider uses the Yahoo data.
-
-Only English and English(US) languages are defined.
+If you are running both the WeatherUnderground and AmbientWeather providers, only one can be enabled at a time.
+Add location search will only work for the enabled provider.
+To add locations for both providers, enable the one you want the location for then add location.
+Then enable the other and add location.
 

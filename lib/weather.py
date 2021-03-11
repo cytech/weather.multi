@@ -67,7 +67,6 @@ class MAIN():
             locs = []
             log('searching for location: %s' % text)
             if text == 'ambient' and AWPWSAPI and AWPWSAPP:
-                # web_pdb.set_trace()
                 url = AWPWSLCURL % (AWPWSAPP, AWPWSAPI)
                 data = self.get_data(url)
                 log('wupws location data: %s' % data)

@@ -44,6 +44,26 @@ Current.WindDegree
 Current.WindDirection
 Current.WindGust
 
+CURRENT (AmbientWeather)
+-------
+Current.DewPoint
+Current.FeelsLike
+Current.Humidity
+Current.Latitude    (station latitude)
+Current.Longitude    (station longitude)
+Current.LocalDate
+Current.LocalTime
+Current.Location
+Current.Precipitation
+Current.Pressure
+Current.SolarRadiation
+Current.Temperature
+Current.UVIndex
+Current.Wind
+Current.WindDegree
+Current.WindDirection
+Current.WindGust
+
 
 
 DAY [0-6] (Yahoo)
