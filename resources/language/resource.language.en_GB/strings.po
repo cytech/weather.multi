@@ -293,9 +293,13 @@ msgid "API Key"
 msgstr ""
 
 msgctxt "#32316"
-msgid "Get AmbientWeather PWS api key -> ambientweather.net/account"
+msgid "Get AmbientWeather PWS API/APP key -> ambientweather.net/account"
 msgstr ""
 
 msgctxt "#32317"
 msgid "Enter the nearest city. For AWPWS enter 'ambient'"
+msgstr ""
+
+msgctxt "#32318"
+msgid "APP Key"
 msgstr ""

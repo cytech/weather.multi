@@ -226,6 +226,21 @@
 						<heading>32110</heading>
 					</control>
 				</setting>
+				<setting help="" id="AWpwsAPP" label="32318" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="AWpwsAdd">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32110</heading>
+					</control>
+				</setting>
 			</group>
 		</category>
 		<category id="3" label="32103">

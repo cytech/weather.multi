@@ -5,10 +5,6 @@ from .providers import weatherbit
 from .providers import openweathermap
 from .providers import wundergroundpws
 from .providers import ambientweatherpws
-import web_pdb
-
-# ambient personal apikey - 417e864a9115435f8d4b1e56e91410d176a4be2f129e4bffa1bea5adf3e9f54c
-# ambient appkey - 92a3860f17ca422e8157ad60313341ac4130778b9c4644eaafe6bcf83a874388
 
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;woeids=%%5B%s%%5D'
@@ -32,7 +28,7 @@ WUPWSADD = ADDON.getSettingBool('WUpwsAdd')
 WUPWSAPI = ADDON.getSettingString('WUpwsAPI')
 AWPWSADD = ADDON.getSettingBool('AWpwsAdd')
 AWPWSAPI = ADDON.getSettingString('AWpwsAPI')
-AWAPPKEY = '92a3860f17ca422e8157ad60313341ac4130778b9c4644eaafe6bcf83a874388'
+AWPWSAPP = ADDON.getSettingString('AWpwsAPP')
 
 MAPS = ADDON.getSettingBool('WMaps')
 MAPID = ADDON.getSettingString('MAPAPI')
@@ -70,9 +66,9 @@ class MAIN():
             text = keyboard.getText()
             locs = []
             log('searching for location: %s' % text)
-            if text == 'ambient':
+            if text == 'ambient' and AWPWSAPI and AWPWSAPP:
                 # web_pdb.set_trace()
-                url = AWPWSLCURL % (AWAPPKEY, AWPWSAPI)
+                url = AWPWSLCURL % (AWPWSAPP, AWPWSAPI)
                 data = self.get_data(url)
                 log('wupws location data: %s' % data)
                 if data:
@@ -94,7 +90,7 @@ class MAIN():
                     else:
                         log('no awpws locations found')
                         dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
-            elif text.startswith('wupws:') and WUPWSADD:
+            elif text.startswith('wupws:') and WUPWSAPI:
                 wupwslocs = []
                 url = WUPWSLCURL % (text.replace('wupws:', ''), WUPWSAPI)
                 data = self.get_data(url)
@@ -191,8 +187,8 @@ class MAIN():
 
         retry = 0
         dataaw = ''
-        if loc.startswith('awpws:') and AWPWSADD and AWPWSAPI:
-            url = AWPWSLCURL % (AWAPPKEY, AWPWSAPI)
+        if loc.startswith('awpws:') and AWPWSAPI and AWPWSAPP:
+            url = AWPWSLCURL % (AWPWSAPP, AWPWSAPI)
             while (retry < 6) and (not self.MONITOR.abortRequested()):
                 data = self.get_data(url)
                 if data:
@@ -212,7 +208,7 @@ class MAIN():
                 self.clear_props()
                 return
             ambientweatherpws.Weather.get_current_weather(dataaw)
-        elif loc.startswith('wupws:') and WUPWSADD and WUPWSAPI:
+        elif loc.startswith('wupws:') and WUPWSAPI:
             url = WUPWSCURL % (locid, WUPWSAPI)
             while (retry < 6) and (not self.MONITOR.abortRequested()):
                 datawu = self.get_data(url)
