@@ -4,6 +4,7 @@ from .providers import yahoo
 from .providers import weatherbit
 from .providers import openweathermap
 from .providers import wundergroundpws
+from .providers import ambientweatherpws
 
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;woeids=%%5B%s%%5D'
@@ -16,11 +17,18 @@ WUPWSFURL = ('https://api.weather.com/v3/wx/forecast/daily/5day?geocode=%s,%s&un
 # weatherunderground pws search pws api
 WUPWSLCURL = ('https://api.weather.com/v3/location/search?query=%s&locationType=pws&language=en-US'
               '&format=json&apiKey=%s')
+# ambientweather.net list devices api - used for both identifying devices and retrieving most recent data
+# can also get stored data by specifying mac address, but that data can be from 5 - 30 minutes old
+# 'https://api.ambientweather.net/v1/devices/MACADDRESS?applicationKey=%s&apiKey=%s'
+AWPWSLCURL = 'https://api.ambientweather.net/v1/devices?applicationKey=%s&apiKey=%s'
 
 WADD = ADDON.getSettingBool('WAdd')
 APPID = ADDON.getSettingString('API')
 WUPWSADD = ADDON.getSettingBool('WUpwsAdd')
 WUPWSAPI = ADDON.getSettingString('WUpwsAPI')
+AWPWSADD = ADDON.getSettingBool('AWpwsAdd')
+AWPWSAPI = ADDON.getSettingString('AWpwsAPI')
+AWPWSAPP = ADDON.getSettingString('AWpwsAPP')
 
 MAPS = ADDON.getSettingBool('WMaps')
 MAPID = ADDON.getSettingString('MAPAPI')
@@ -49,6 +57,8 @@ class MAIN():
         value = ADDON.getSettingString(mode)
         if WUPWSADD:
             keyboard = xbmc.Keyboard(value, ADDON.getLocalizedString(32313), False)
+        elif AWPWSADD:
+            keyboard = xbmc.Keyboard(value, ADDON.getLocalizedString(32317), False)
         else:
             keyboard = xbmc.Keyboard(value, xbmc.getLocalizedString(14024), False)
         keyboard.doModal()
@@ -56,9 +66,33 @@ class MAIN():
             text = keyboard.getText()
             locs = []
             log('searching for location: %s' % text)
-            if text.startswith('pws:') and WUPWSADD:
+            if text == 'ambient' and AWPWSAPI and AWPWSAPP:
+                # web_pdb.set_trace()
+                url = AWPWSLCURL % (AWPWSAPP, AWPWSAPI)
+                data = self.get_data(url)
+                log('wupws location data: %s' % data)
+                if data:
+                    locs = data
+                    dialog = xbmcgui.Dialog()
+                    if locs:
+                        items = []
+                        for item in locs:
+                            listitem = (xbmcgui.ListItem(item['info']['name'], item['info']['coords']['location'] +
+                                                         ' [' + str(item['info']['coords']['coords']['lat']) + '/' + str(item['info']['coords']['coords']['lon']) + ']'))
+                            items.append(listitem)
+                        selected = dialog.select(xbmc.getLocalizedString(396), items, useDetails=True)
+                        if selected != -1:
+                            ADDON.setSettingString(mode, 'awpws:' + locs[selected]['info']['name'])
+                            ADDON.setSettingString(mode + 'id', locs[selected]['macAddress'])
+                            ADDON.setSettingNumber(mode + 'lat', locs[selected]['info']['coords']['coords']['lat'])
+                            ADDON.setSettingNumber(mode + 'lon', locs[selected]['info']['coords']['coords']['lon'])
+                            log('selected location: %s' % str(locs[selected]))
+                    else:
+                        log('no awpws locations found')
+                        dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
+            elif text.startswith('wupws:') and WUPWSAPI:
                 wupwslocs = []
-                url = WUPWSLCURL % (text.replace('pws:', ''), WUPWSAPI)
+                url = WUPWSLCURL % (text.replace('wupws:', ''), WUPWSAPI)
                 data = self.get_data(url)
                 # test data
                 # None for false and null values in wupws api response
@@ -152,8 +186,29 @@ class MAIN():
         log('weather location: %s' % locid)
 
         retry = 0
-        datawu = ''
-        if loc.startswith('wupws:') and WUPWSADD and WUPWSAPI:
+        dataaw = ''
+        if loc.startswith('awpws:') and AWPWSAPI and AWPWSAPP:
+            url = AWPWSLCURL % (AWPWSAPP, AWPWSAPI)
+            while (retry < 6) and (not self.MONITOR.abortRequested()):
+                data = self.get_data(url)
+                if data:
+                    for device in data:
+                        if device['macAddress'] == locid:
+                            dataaw = device
+
+                    providers = '  AmbientWeather'
+                    break
+                else:
+                    self.MONITOR.waitForAbort(10)
+                    retry += 1
+                    log('ambientweather download failed')
+            log('ambientweather forecast data: %s' % dataaw)
+
+            if not dataaw:
+                self.clear_props()
+                return
+            ambientweatherpws.Weather.get_current_weather(dataaw)
+        elif loc.startswith('wupws:') and WUPWSAPI:
             url = WUPWSCURL % (locid, WUPWSAPI)
             while (retry < 6) and (not self.MONITOR.abortRequested()):
                 datawu = self.get_data(url)

@@ -281,5 +281,25 @@ msgid "Get Wunderground PWS api key -> wunderground.com/member/api-keys"
 msgstr ""
 
 msgctxt "#32313"
-msgid "Enter the nearest city. For PWS enter pws:stationId"
+msgid "Enter the nearest city. For WUPWS enter 'wupws:{STATIONID}'"
+msgstr ""
+
+msgctxt "#32314"
+msgid "Use AmbientWeather PWS API for current PWS data"
+msgstr ""
+
+msgctxt "#32315"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#32316"
+msgid "Get AmbientWeather PWS API/APP key -> ambientweather.net/account"
+msgstr ""
+
+msgctxt "#32317"
+msgid "Enter the nearest city. For AWPWS enter 'ambient'"
+msgstr ""
+
+msgctxt "#32318"
+msgid "APP Key"
 msgstr ""
