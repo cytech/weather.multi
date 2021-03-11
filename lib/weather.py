@@ -185,13 +185,15 @@ class MAIN():
         log('weather location: %s' % locid)
 
         retry = 0
+        data = ''
+        datawu = ''
         dataaw = ''
         if loc.startswith('awpws:') and AWPWSAPI and AWPWSAPP:
             url = AWPWSLCURL % (AWPWSAPP, AWPWSAPI)
             while (retry < 6) and (not self.MONITOR.abortRequested()):
-                data = self.get_data(url)
-                if data:
-                    for device in data:
+                awdata = self.get_data(url)
+                if awdata:
+                    for device in awdata:
                         if device['macAddress'] == locid:
                             dataaw = device
 
@@ -276,8 +278,11 @@ class MAIN():
             weatherbit.Weather.get_weather(add_weather)
             providers = providers + ', Weatherbit.io'
             set_property('Hourly.IsFetched', 'true')
-        elif datawu and WUPWSADD and WUPWSAPI and add_weather == '':
+        elif datawu and WUPWSAPI and add_weather == '':
             wundergroundpws.Weather.get_daily_weather(datawu)
+        elif dataaw and AWPWSAPI and AWPWSAPP and add_weather == '':
+            set_property('Forecast.IsFetched', '')
+            log('to be added...')
         else:
             yahoo.Weather.get_daily_weather(data)
         set_property('WeatherProvider', providers)
