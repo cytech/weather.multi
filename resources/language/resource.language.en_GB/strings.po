@@ -281,7 +281,7 @@ msgid "Get Wunderground PWS api key -> wunderground.com/member/api-keys"
 msgstr ""
 
 msgctxt "#32313"
-msgid "Enter the nearest city. For PWS enter pws:stationId"
+msgid "Enter the nearest city. For WUPWS enter 'wupws:{STATIONID}'"
 msgstr ""
 
 msgctxt "#32314"
@@ -294,4 +294,8 @@ msgstr ""
 
 msgctxt "#32316"
 msgid "Get AmbientWeather PWS api key -> ambientweather.net/account"
+msgstr ""
+
+msgctxt "#32317"
+msgid "Enter the nearest city. For AWPWS enter 'ambient'"
 msgstr ""
