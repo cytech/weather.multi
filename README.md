@@ -40,7 +40,7 @@ The StationID collects the data from the PWS and displays in the current observa
 Caveats:
 
 
-The Wunderground Forecast API only returns daily forecast for 5 days. It does not have more than 5 days or hourly like the Yahoo Forecast.
+The Wunderground Forecast API only returns daily forecast for 5 days. It does not have more than 5 days or hourly like the Yahoo Forecast.  
 To get extended forecast you may want to sign up for the Weatherbit.io api and enable it.
 This will override the Wunderground forecast.
 
@@ -82,7 +82,9 @@ The StationID collects the data from the PWS and displays in the current observa
 
 Caveats:
 
-The AmbientWeather API does not provide forecast data. The displayed forecast will be provided by Yahoo.
+The AmbientWeather API does not provide forecast data. The displayed forecast will be provided by Yahoo.  
+The current condition description (i.e. "Breezy") is also supplied by Yahoo.  
+The sunrise and sunset times are supplied thru the SunTime python library (https://github.com/SatAgro/suntime).  
 To get extended forecast you may want to sign up for the Weatherbit.io api and enable it.
 This will override the Yahoo forecast.
 

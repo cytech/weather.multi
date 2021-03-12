@@ -1,3 +1,4 @@
+# import web_pdb
 # web_pdb.set_trace()
 from .conversions import *
 from .providers import yahoo
@@ -5,6 +6,7 @@ from .providers import weatherbit
 from .providers import openweathermap
 from .providers import wundergroundpws
 from .providers import ambientweatherpws
+from .suntime import Sun, SunTimeException
 
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;woeids=%%5B%s%%5D'
@@ -69,7 +71,7 @@ class MAIN():
             if text == 'ambient' and AWPWSAPI and AWPWSAPP:
                 url = AWPWSLCURL % (AWPWSAPP, AWPWSAPI)
                 data = self.get_data(url)
-                log('wupws location data: %s' % data)
+                log('awpws location data: %s' % data)
                 if data:
                     locs = data
                     dialog = xbmcgui.Dialog()
@@ -196,8 +198,13 @@ class MAIN():
                     for device in awdata:
                         if device['macAddress'] == locid:
                             dataaw = device
+                            sun = Sun(lat, lon)
+                            today_sr = sun.get_sunrise_time()
+                            today_ss = sun.get_sunset_time()
+                            dataaw['info']['sunrise'] = today_sr.timestamp()
+                            dataaw['info']['sunset'] = today_ss.timestamp()
 
-                    providers = '  AmbientWeather'
+                    providers = '  AmbientWeatherPWS'
                     break
                 else:
                     self.MONITOR.waitForAbort(10)
@@ -209,6 +216,21 @@ class MAIN():
                 self.clear_props()
                 return
             ambientweatherpws.Weather.get_current_weather(dataaw)
+            url = LCURL % dataaw['info']['coords']['address']
+            woedata = self.get_data(url)
+            locid = woedata[0]['woeid']
+            url = FCURL % locid
+            while (retry < 6) and (not self.MONITOR.abortRequested()):
+                data = self.get_data(url)
+                if data:
+                    providers += '  Yahoo'
+                    break
+                else:
+                    self.MONITOR.waitForAbort(10)
+                    retry += 1
+                    log('weather download failed')
+            log('yahoo forecast data: %s' % data)
+            set_property('Current.Condition', data['weathers'][0]['observation']['conditionDescription'])
         elif loc.startswith('wupws:') and WUPWSAPI:
             url = WUPWSCURL % (locid, WUPWSAPI)
             while (retry < 6) and (not self.MONITOR.abortRequested()):
@@ -216,7 +238,7 @@ class MAIN():
                 if datawu:
                     set_property('Location', datawu['observations'][0]['neighborhood'] + ', '
                                  + datawu['observations'][0]['stationID'])
-                    providers = '  WUnderground PWS'
+                    providers = '  WUndergroundPWS'
                     retry = 0
                     lat = datawu['observations'][0]['lat']
                     lon = datawu['observations'][0]['lon']
@@ -281,8 +303,7 @@ class MAIN():
         elif datawu and WUPWSAPI and add_weather == '':
             wundergroundpws.Weather.get_daily_weather(datawu)
         elif dataaw and AWPWSAPI and AWPWSAPP and add_weather == '':
-            set_property('Forecast.IsFetched', '')
-            log('to be added...')
+            yahoo.Weather.get_daily_weather(data)
         else:
             yahoo.Weather.get_daily_weather(data)
         set_property('WeatherProvider', providers)

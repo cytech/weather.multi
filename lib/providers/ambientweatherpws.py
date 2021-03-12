@@ -33,6 +33,8 @@ class Weather():
         set_property('Current.WindGust', convert_speed(data['lastData']['windspeedmph'], 'mph', 'kmh') + ' ' + SPEEDUNIT)
         set_property('Current.LocalTime', convert_datetime(data['lastData']['dateutc'], 'timestamp', 'time', None))
         set_property('Current.LocalDate', convert_datetime(data['lastData']['dateutc'], 'timestamp', 'timedate', None))
+        set_property('Today.Sunrise', convert_datetime(data['info']['sunrise'], 'timestamp', 'time', None))
+        set_property('Today.Sunset', convert_datetime(data['info']['sunset'], 'timestamp', 'time', None))
         set_property('Current.IsFetched', 'true')
         cleardailyproperties()
 
