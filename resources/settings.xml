@@ -177,11 +177,6 @@
 				<setting help="" id="WUpwsAdd" label="32308" type="boolean">
 					<level>0</level>
 					<default>false</default>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="AWpwsAdd">false</condition>
-						</dependency>
-					</dependencies>
 					<control type="toggle"/>
 				</setting>
 				<setting help="" id="WUpwsAPI" label="32309" type="string">
@@ -204,11 +199,6 @@
 				<setting help="" id="AWpwsAdd" label="32314" type="boolean">
 					<level>0</level>
 					<default>false</default>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="WUpwsAdd">false</condition>
-						</dependency>
-					</dependencies>
 					<control type="toggle"/>
 				</setting>
 				<setting help="" id="AWpwsAPI" label="32315" type="string">

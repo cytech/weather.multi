@@ -42,12 +42,10 @@ Caveats:
 
 The Wunderground Forecast API only returns daily forecast for 5 days. It does not have more than 5 days or hourly like the Yahoo Forecast.  
 To get extended forecast you may want to sign up for the Weatherbit.io api and enable it.
-This will override the Wunderground forecast.
+This will override the Wunderground forecast.  
+The WundergroundPWS location search allows you to enter any registered station ID (i.e. KAZXXXXXX).  
+You are not limited to just your own station.
 
-If you are running both the WeatherUnderground and AmbientWeather providers, only one can be enabled at a time.
-Add location search will only work for the enabled provider.
-To add locations for both providers, enable the one you want the location for then add location.
-Then enable the other and add location.
 
 AMBIENTWEATHER.NET
 ------------------
@@ -86,12 +84,9 @@ The AmbientWeather API does not provide forecast data. The displayed forecast wi
 The current condition description (i.e. "Breezy") is also supplied by Yahoo.  
 The sunrise and sunset times are supplied thru the SunTime python library (https://github.com/SatAgro/suntime).  
 To get extended forecast you may want to sign up for the Weatherbit.io api and enable it.
-This will override the Yahoo forecast.
-
-If you are running both the WeatherUnderground and AmbientWeather providers, only one can be enabled at a time.
-Add location search will only work for the enabled provider.
-To add locations for both providers, enable the one you want the location for then add location.
-Then enable the other and add location.
+This will override the Yahoo forecast.  
+The Ambient location search only allows return of your registered Ambient weather stations.  
+The API currently does not allow access to other Ambient users station data.
 
 
 ********************************

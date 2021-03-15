@@ -57,7 +57,9 @@ class MAIN():
 
     def search_location(self, mode):
         value = ADDON.getSettingString(mode)
-        if WUPWSADD:
+        if WUPWSADD and AWPWSADD:
+            keyboard = xbmc.Keyboard(value, ADDON.getLocalizedString(32319), False)
+        elif WUPWSADD:
             keyboard = xbmc.Keyboard(value, ADDON.getLocalizedString(32313), False)
         elif AWPWSADD:
             keyboard = xbmc.Keyboard(value, ADDON.getLocalizedString(32317), False)
@@ -68,7 +70,7 @@ class MAIN():
             text = keyboard.getText()
             locs = []
             log('searching for location: %s' % text)
-            if text == 'ambient' and AWPWSAPI and AWPWSAPP:
+            if text == 'awpws' and AWPWSAPI and AWPWSAPP:
                 url = AWPWSLCURL % (AWPWSAPP, AWPWSAPI)
                 data = self.get_data(url)
                 log('awpws location data: %s' % data)
