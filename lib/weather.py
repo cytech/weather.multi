@@ -16,9 +16,12 @@ WUPWSCURL = 'https://api.weather.com/v2/pws/observations/current?stationId=%s&fo
 # weatherunderground pws 5 day forecast
 WUPWSFURL = ('https://api.weather.com/v3/wx/forecast/daily/5day?geocode=%s,%s&units=m&language=en-US'
              '&format=json&apiKey=%s')
-# weatherunderground pws search pws api
-WUPWSLCURL = ('https://api.weather.com/v3/location/search?query=%s&locationType=pws&language=en-US'
+# weatherunderground pws search city api
+WUPWSLCCURL = ('https://api.weather.com/v3/location/search?query=%s&locationType=city&language=en-US'
               '&format=json&apiKey=%s')
+# weatherunderground pws search for pws near geocode api
+WUPWSNEARURL = ('https://api.weather.com/v3/location/near?geocode=%s,%s&product=pws'
+                '&format=json&apiKey=%s')
 # ambientweather.net list devices api - used for both identifying devices and retrieving most recent data
 # can also get stored data by specifying mac address, but that data can be from 5 - 30 minutes old
 # 'https://api.ambientweather.net/v1/devices/MACADDRESS?applicationKey=%s&apiKey=%s'
@@ -68,6 +71,15 @@ class MAIN():
         keyboard.doModal()
         if keyboard.isConfirmed() and keyboard.getText():
             text = keyboard.getText()
+            # not documented, for debugging
+            if text == '_DELETE_':
+                dialog = xbmcgui.Dialog()
+                ADDON.setSettingString(mode, '')
+                ADDON.setSettingString(mode + 'id', '-1')
+                ADDON.setSettingNumber(mode + 'lat', 0)
+                ADDON.setSettingNumber(mode + 'lon', 0)
+                dialog.ok(ADDONNAME, ADDON.getLocalizedString(32320))
+                return
             locs = []
             log('searching for location: %s' % text)
             if text == 'awpws' and AWPWSAPI and AWPWSAPP:
@@ -95,18 +107,13 @@ class MAIN():
                         dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
             elif text.startswith('wupws:') and WUPWSAPI:
                 wupwslocs = []
-                url = WUPWSLCURL % (text.replace('wupws:', ''), WUPWSAPI)
+                url = WUPWSLCCURL % (text.replace('wupws:', ''), WUPWSAPI)
                 data = self.get_data(url)
-                # test data
-                # None for false and null values in wupws api response
-                # null = false = None
-                # data = {"address": ["Bisbee, Arizona, United States", "Bisbee, North Dakota, United States", "Bisbee Jct, Arizona, United States", "Bisbee Junction, Arizona, United States", "Bissee, Schleswig-Holstein, Germany", "Bislée, Meuse, France", "Bigbee, Alabama, United States", "Bigbee Valley, Mississippi, United States", "Bigbee, Mississippi, United States"], "adminDistrict": ["Arizona", "North Dakota", "Arizona", "Arizona", "Schleswig-Holstein", "Meuse", "Alabama", "Mississippi", "Mississippi"], "adminDistrictCode": ["AZ", "ND", "AZ", "AZ", null, null, "AL", "MS", "MS"], "city": ["Bisbee", "Bisbee", "Bisbee Jct", "Bisbee Junction", "Bissee", "Bislée", "Bigbee", "Bigbee Valley", "Bigbee"], "country": ["United States", "United States", "United States", "United States", "Germany", "France", "United States", "United States", "United States"], "countryCode": ["US", "US", "US", "US", "DE", "FR", "US", "US", "US"], "displayName": ["Bisbee", "Bisbee", "Bisbee Jct", "Bisbee Junction", "Bissee", "Bislée", "Bigbee", "Bigbee Valley", "Bigbee"], "ianaTimeZone": ["America/Phoenix", "America/Chicago", "America/Phoenix", "America/Phoenix", "Europe/Berlin", "Europe/Paris", "America/Chicago", "America/Chicago", "America/Chicago"], "latitude": [31.448, 48.626, 31.442, 31.351, 54.195, 48.869, 31.614, 33.248, 34.016], "locale": [{"locale1": "Cochise County", "locale2": "Bisbee", "locale3": null, "locale4": null}, {"locale1": "Towner County", "locale2": "Bisbee", "locale3": null, "locale4": null}, {"locale1": "Cochise County", "locale2": "Bisbee Jct", "locale3": null, "locale4": null}, {"locale1": "Cochise County", "locale2": "Bisbee Junction", "locale3": null, "locale4": null}, {"locale1": null, "locale2": "Bissee", "locale3": null, "locale4": null}, {"locale1": null, "locale2": "Bislée", "locale3": null, "locale4": null}, {"locale1": "Washington County", "locale2": "Bigbee", "locale3": null, "locale4": null}, {"locale1": "Noxubee County", "locale2": "Bigbee Valley", "locale3": null, "locale4": null}, {"locale1": "Monroe County", "locale2": "Bigbee", "locale3": null, "locale4": null}], "longitude": [-109.928, -99.378, -109.915, -109.886, 10.112, 5.494, -88.166, -88.35, -88.519], "neighborhood": [null, null, null, null, null, null, null, null, null], "placeId": ["18d82e3e64c39b4ab1a72e7d640e4e66881a604fce1b7984b2dca3546fbe2b51", "c10eead90445926ce4a27d49c498bad47c45d6d7eddf9347463279fb6c5f2074", "76dd260f101f702ca69177b6882491503c61f2d17503493aeb24d4aa783070a0", "ff3445d7cd1b9edad6ad91b10e853812747b205af62242620cbf8540d67be34c", "a99a22bb5297897be55f5804cbfb917778efe1b6c92662242343396a578a0608", "b2c41fceaa897bc60c3a3f7bd25ea77a1b22769d97f705ca9e88cbd771ecf2b7", "36172c89111c8f37487dfbb61ded2830a5c3b5b557aaf0fde8cfba2738d48a3a", "b8d4a4fbe1536da4ded6acb0221c6408f18692c5a47a8a99fd2526e562901173", "7b41d0e086638e6269875b26b6de3775f3a17c0d680032c5cc16f3253913096b"], "postalCode": ["85603", "58317", "85603", "85603", "24582", "55300", "36538", "39739", "38825"], "postalKey": ["85603:US", "58317:US", "85603:US", "85603:US", "24582:DE", "55300:FR", "36538:US", "39739:US", "38825:US"], "disputedArea": [false, false, false, false, false, false, false, false, false], "iataCode": ["DUG", "DVL", "DUG", "DUG", "KEL", "ETZ", "MOB", "GTR", "TUP"], "icaoCode": ["KDUG", "KDVL", "KDUG", "KDUG", "EDHK", "LFJL", "KMOB", "KGTR", "KTUP"], "locId": [null, null, null, null, null, null, null, null, null], "locationCategory": [null, null, null, null, null, null, null, null, null], "pwsId": [null, null, null, null, null, null, null, null, null], "type": ["city", "city", "city", "city", "city", "city", "city", "city", "city"]}
                 log('wupws location data: %s' % data)
-                if data:
+                # find city
+                if 'location' in data:
                     locs = data['location']
-                    # test data
-                    # locs = data
-                    wupwl_keys = ("address", "city", "country", "latitude", "longitude", "placeId", "pwsId")
+                    wupwl_keys = ("address", "city", "country", "latitude", "longitude", "placeId")
                     wupwl_dict = dict([(i, locs[i]) for i in locs if i in set(wupwl_keys)])
                     tempdict = {}
                     i = len(wupwl_dict['address'])
@@ -122,21 +129,48 @@ class MAIN():
                 if wupwslocs:
                     items = []
                     for item in wupwslocs:
-                        listitem = (xbmcgui.ListItem(item['address'] + ', StationId - ' + item['pwsId'],
-                                                     ' [' + str(item['latitude']) + '/' + str(
-                                                         item['longitude']) + ']'))
+                        listitem = (xbmcgui.ListItem(item['address'], item['city'] + ' - ' + item['country']
+                                                     + ' [' + str(item['latitude']) + '/' + str(
+                            item['longitude']) + ']'))
                         items.append(listitem)
                     selected = dialog.select(xbmc.getLocalizedString(396), items, useDetails=True)
+                    # find closest PWS's to selected city
                     if selected != -1:
-                        ADDON.setSettingString(mode,
-                                               'wupws:' + wupwslocs[selected]['address'] + ', ' + wupwslocs[selected][
-                                                   'pwsId'])
-                        ADDON.setSettingString(mode + 'id', wupwslocs[selected]['pwsId'])
-                        ADDON.setSettingNumber(mode + 'lat', wupwslocs[selected]['latitude'])
-                        ADDON.setSettingNumber(mode + 'lon', wupwslocs[selected]['longitude'])
-                        log('selected location: %s' % str(wupwslocs[selected]))
+                        url = WUPWSNEARURL % (wupwslocs[selected]['latitude'], wupwslocs[selected]['longitude'], WUPWSAPI)
+                        data = self.get_data(url)
+                        if 'location' in data:
+                            locs = data['location']
+                            wupwl_keys = ("stationName", "stationId", "latitude", "longitude", "distanceMi")
+                            wupwl_dict = dict([(i, locs[i]) for i in locs if i in set(wupwl_keys)])
+                            tempdict = {}
+                            wupwslocs =[]
+                            i = len(wupwl_dict['stationName'])
+
+                            for itemcount in range(0, i):
+                                for key, value in wupwl_dict.items():
+                                    tempdict.update({key: value[itemcount]})
+                                wupwslocs.append(tempdict)
+                                tempdict = {}
+                        dialog = xbmcgui.Dialog()
+                        log('wupwslocs %s' % locs)
+                        if wupwslocs:
+                            items = []
+                            for item in wupwslocs:
+                                listitem = (xbmcgui.ListItem('Personal Weather Station - ' + item['stationId'],
+                                                             str(item['distanceMi']) + ' Miles from selected city '))
+                                items.append(listitem)
+                            selected = dialog.select(xbmc.getLocalizedString(396), items, useDetails=True)
+                        if selected != -1:
+                            ADDON.setSettingString(mode, 'wupws:' + wupwslocs[selected]['stationId'])
+                            ADDON.setSettingString(mode + 'id', wupwslocs[selected]['stationId'])
+                            ADDON.setSettingNumber(mode + 'lat', wupwslocs[selected]['latitude'])
+                            ADDON.setSettingNumber(mode + 'lon', wupwslocs[selected]['longitude'])
+                            log('selected location: %s' % str(wupwslocs[selected]))
+                        else:
+                            log('no wupws station location found')
+                            dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
                 else:
-                    log('no wupws locations found')
+                    log('no wupws city location found')
                     dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
             else:
                 url = LCURL % text
@@ -225,7 +259,7 @@ class MAIN():
             while (retry < 6) and (not self.MONITOR.abortRequested()):
                 data = self.get_data(url)
                 if data:
-                    providers += '  Yahoo'
+                    providers += ', Yahoo'
                     break
                 else:
                     self.MONITOR.waitForAbort(10)

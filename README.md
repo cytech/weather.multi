@@ -33,7 +33,11 @@ First have the Kodi 19 Multi Weather addon installed and configured. then:
    1.) Enable "Use Wunderground PWS API for current PWS data"
    
    2.) Enter your wundergroundpws API key
-   
+
+4) Once enabled, add location by entering "wupws:CITY" in search location field (example - wupws:atlanta).    
+   This will return a list of cities worldwide. Select the city in the list.  
+   You will then receive a list of Wunderground personal weather stations near the selected city.  
+   Select the PWS that you would like to monitor.
    
 The StationID collects the data from the PWS and displays in the current observation (top area) in Kodi Weather.
 
@@ -43,8 +47,7 @@ Caveats:
 The Wunderground Forecast API only returns daily forecast for 5 days. It does not have more than 5 days or hourly like the Yahoo Forecast.  
 To get extended forecast you may want to sign up for the Weatherbit.io api and enable it.
 This will override the Wunderground forecast.  
-The WundergroundPWS location search allows you to enter any registered station ID (i.e. KAZXXXXXX).  
-You are not limited to just your own station.
+
 
 
 AMBIENTWEATHER.NET
@@ -74,7 +77,9 @@ First have the Kodi 19 Multi Weather addon installed and configured. then:
    2.) Enter your AmbientWeather API key
 
    3.) Enter your AmbientWeather Application key
-   
+
+5) Once enabled, add location by entering "awpws" in search location field.  
+   This will return a list of your registered AmbientWeather.net stations to select from.   
    
 The StationID collects the data from the PWS and displays in the current observation (top area) in Kodi Weather.
 
