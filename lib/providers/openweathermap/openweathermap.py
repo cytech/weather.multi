@@ -1,7 +1,12 @@
-from ..conversions import *
+from lib.conversions import *
+
+MAPS = ADDON.getSettingBool('WMaps')
+MAPID = ADDON.getSettingString('MAPAPI')
+ZOOM = str(ADDON.getSettingInt('Zoom') + 2)
+
 
 class Weather():
-    def __init__():
+    def __init__(self):
         pass
 
     def get_weather(lat, lon, zoom, mapid):

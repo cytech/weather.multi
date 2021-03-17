@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.multi" name="Multi Weather" version="0.0.6" provider-name="ronie">
+<addon id="weather.multi" name="Multi Weather" version="1.0.3" provider-name="cytech">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.openweathermap.maps" version="1.0.4"/>
@@ -10,15 +10,15 @@
 	<extension point="xbmc.python.weather" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">Weather forecast from several providers</summary>
-		<description lang="en_GB">Weather forecast provided by Yahoo, Weatherbit and Openweathermap</description>
+		<description lang="en_GB">Weather forecast provided by Yahoo, WundergroundPWS, AmbientWeather.net (PWS Current), Weatherbit and Openweathermap</description>
 		<platform>all</platform>
 		<license>GPL-2.0-only</license>
-		<forum>https://forum.kodi.tv/showthread.php?tid=352028</forum>
-		<source>https://gitlab.com/ronie/weather.multi/</source>
+		<forum></forum>
+		<source>https://github.com/cytech/weather.multi</source>
 		<assets>
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
-		<news>- fix yahoo weather</news>
+		<news>- fork of https://gitlab.com/ronie/weather.multi to add WundergroundPWS and AmbientPWS </news>
 	</extension>
 </addon>

@@ -1,6 +1,7 @@
-from ..conversions import *
+from lib.conversions import *
 
-class Weather():
+
+class Weather:
     def __init__(self):
         pass
 

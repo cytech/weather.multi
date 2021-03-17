@@ -1,8 +1,10 @@
-Fork  
+Fork
+v1.0.3
+- modularize new providers
+
 v.0.0.2
 - revert wunderground pws search location to city with list of nearby stations
 - added non-documented \_DELETE\_ for location deletion - DEBUGGING USE ONLY 
-- modularize new providers
 
 v0.0.1
 - added wunderground and ambientweather providers

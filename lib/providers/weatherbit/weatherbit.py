@@ -1,7 +1,13 @@
-from ..conversions import *
+from lib.conversions import *
+
+AURL = 'https://api.weatherbit.io/v2.0/%s'
+
+WADD = ADDON.getSettingBool('WAdd')
+APPID = ADDON.getSettingString('API')
+
 
 class Weather():
-    def __init__():
+    def __init__(self):
         pass
 
     def get_weather(data):

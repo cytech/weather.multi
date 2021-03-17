@@ -1,4 +1,5 @@
-from ..conversions import *
+from lib.conversions import *
+
 
 class Weather():
     def __init__(self):
@@ -17,9 +18,11 @@ class Weather():
         set_property('Current.Humidity', str(data['humidity']))
         set_property('Current.Temperature', str(data['metric']['temp']))
         if 'F' in TEMPUNIT:
-            pressure = str(round(data['metric']['pressure'] * 0.02953, 2)) + ' inHg' if data['metric']['pressure'] is not None else 'N/A'
+            pressure = str(round(data['metric']['pressure'] * 0.02953, 2)) + ' inHg' if data['metric'][
+                                                                                            'pressure'] is not None else 'N/A'
             set_property('Current.Pressure', pressure)
-            precipitation = str(round(data['metric']['precipRate'] * 0.0393701, 2)) + ' in/hr' if data['metric']['precipRate'] is not None else 'N/A'
+            precipitation = str(round(data['metric']['precipRate'] * 0.0393701, 2)) + ' in/hr' if data['metric'][
+                                                                                                      'precipRate'] is not None else 'N/A'
             set_property('Current.Precipitation', precipitation)
             set_property('Current.HeatIndex',
                          convert_temp(data['metric']['heatIndex'], 'C') + TEMPUNIT)
@@ -44,12 +47,12 @@ class Weather():
         data = response
         # check if WUPWSFADD is enabled, if not default to yahoo
         if ('sunriseTimeUtc' in data):
-            set_property('Today.Sunrise'             , convert_datetime(data['sunriseTimeUtc'][0], 'timestamp', 'time', None))
-            set_property('Today.Sunset'              , convert_datetime(data['sunsetTimeUtc'][0], 'timestamp', 'time', None))
-            set_property('Today.Moonphase'           , data['moonPhase'][0])
+            set_property('Today.Sunrise', convert_datetime(data['sunriseTimeUtc'][0], 'timestamp', 'time', None))
+            set_property('Today.Sunset', convert_datetime(data['sunsetTimeUtc'][0], 'timestamp', 'time', None))
+            set_property('Today.Moonphase', data['moonPhase'][0])
             # after 3 pm apparent time, wupws forecast api returns null for [0] item of daypart properties
             i = 1 if data['daypart'][0]['wxPhraseLong'][0] is None else 0
-            set_property('Current.Condition'         , data['daypart'][0]['wxPhraseLong'][i])
+            set_property('Current.Condition', data['daypart'][0]['wxPhraseLong'][i])
             set_property('Today.IsFetched', 'true')
 
     def get_daily_weather(response):
@@ -94,7 +97,8 @@ class Weather():
             # of the daypart object will appear as null in the API after 3:00pm Local Apparent Time.
             # this provider only uses iconCode and temperature in the forecast at this time
             # so after 3pm set iconCode to the night item and temperature to 'N/A'
-            if data['daypart'][0]['iconCode'][2 * count] is None or data['daypart'][0]['temperature'][2 * count] is None:
+            if data['daypart'][0]['iconCode'][2 * count] is None or data['daypart'][0]['temperature'][
+                2 * count] is None:
                 weathercode = data['daypart'][0]['iconCode'][2 * count + 1]
                 set_property('Daily.%i.HighTemperature' % (count + 1), str('N/A'))
             else:
@@ -130,6 +134,7 @@ def feels_like(t, ws=0, hi=0, wc=0):
     else:
         feelslike = t
     return str(int(round(feelslike)))
+
 
 # clear yahoo  and weatherbit forecast when location change
 def cleardailyproperties():
