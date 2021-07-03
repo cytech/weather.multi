@@ -16,6 +16,14 @@ msgstr ""
 "Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Weather forecast from several providers"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Weather forecast provided by Yahoo, Weatherbit and Openweathermap"
+msgstr ""
+
 msgctxt "#32101"
 msgid "Location setup"
 msgstr ""
