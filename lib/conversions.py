@@ -177,7 +177,7 @@ FORECAST = {'200': LANGUAGE(32201),
 
 
 # convert timestamp to localized time and date
-# stamp (input value): either datetime (2020-02-28T22:00:00.000Z), timestamp (1582871381) or daynumber (1)
+# stamp (input value): either datetime (2020-02-28T22:00:00.000Z), timestamp (1582871381), timestampms (1582871381000), or daynumber (1)
 # inpt (input format) either 'datetime', 'timestamp', 'seconds' (after midnight) or 'day'
 # outpt (return value) time+date, month+day, weekday, time
 # form (output format) either long or short names 
@@ -186,6 +186,8 @@ def convert_datetime(stamp, inpt, outpt, form):
         timestruct = time.strptime(stamp[:-5], "%Y-%m-%dT%H:%M:%S")
     elif inpt == 'timestamp':
         timestruct = time.localtime(stamp)
+    elif inpt == 'timestampms':
+        timestruct = time.localtime(stamp // 1000)
     elif inpt == 'seconds':
         m, s = divmod(stamp, 60)
         h, m = divmod(m, 60)

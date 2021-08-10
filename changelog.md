@@ -1,4 +1,7 @@
-Fork
+Fork  
+v1.0.4
+- correct issue with millisecond timestamp conversion on raspberry pi  
+
 v1.0.3
 - modularize new providers
 
