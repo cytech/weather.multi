@@ -1,3 +1,6 @@
+v0.0.8
+- fix fetching weather for wrong location
+
 v0.0.7
 - fix yahoo weather again
 
