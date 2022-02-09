@@ -86,6 +86,9 @@ class MAIN():
         ycookie = ADDON.getSettingString('ycookie')
         ycrumb = ADDON.getSettingString('ycrumb')
         ystamp = ADDON.getSettingString('ystamp')
+        log('cookie from settings: %s' % ycookie)
+        log('crumb from settings: %s' % ycrumb)
+        log('stamp from settings: %s' % ystamp)
         if ystamp == '' or (int(time.time()) - int(ystamp) > 31536000): # cookie expires after 1 year
             try:
                 retry = 0
@@ -104,7 +107,11 @@ class MAIN():
                 ADDON.setSettingString('ycookie', ycookie)
                 ADDON.setSettingString('ycrumb', ycrumb)
                 ADDON.setSettingString('ystamp', str(int(ystamp)))
+                log('save cookie to settings: %s' % ycookie)
+                log('save crumb to settings: %s' % ycrumb)
+                log('save stamp to settings: %s' % ystamp
             except:
+                log('exception while getting cookie')
                 return '', ''
         return ycookie, ycrumb
 
