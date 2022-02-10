@@ -109,7 +109,7 @@ class MAIN():
                 ADDON.setSettingString('ystamp', str(int(ystamp)))
                 log('save cookie to settings: %s' % ycookie)
                 log('save crumb to settings: %s' % ycrumb)
-                log('save stamp to settings: %s' % ystamp
+                log('save stamp to settings: %s' % ystamp)
             except:
                 log('exception while getting cookie')
                 return '', ''
