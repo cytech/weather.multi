@@ -1,3 +1,7 @@
+v0.0.10
+- fix weatherbit.io outlook translation
+- add yahoo outlook translation
+
 v0.0.9
 - bump for repo release
 
