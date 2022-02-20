@@ -5,7 +5,11 @@ class Weather():
         pass
 
     def get_weather(response, loc, locid):
-        data = response['weathers'][0]
+        try: #TODO temp workaround, can be removed in future versions
+            data = response['weathers'][0]
+        except:
+            ADDON.setSettingString('ystamp', '') #this will force multiweather to retrieve a new crumb next time
+            return
     #current - standard
         set_property('Location'                  , loc)
         set_property('Updated'                   , convert_datetime(data['observation']['observationTime']['timestamp'], 'datetime', 'timedate', None))
@@ -62,7 +66,10 @@ class Weather():
         set_property('Hourly.IsFetched'              , 'true')
 
     def get_daily_weather(response):
-        data = response['weathers'][0]
+        try: #TODO temp workaround, can be removed in future versions
+            data = response['weathers'][0]
+        except:
+            return
     #daily - standard
         for count, item in enumerate(data['forecasts']['daily']):
             set_property('Day%i.Title'           % count, convert_datetime(item['observationTime']['weekday'], 'day', 'weekday', 'long'))
