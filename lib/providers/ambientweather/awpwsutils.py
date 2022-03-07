@@ -2,10 +2,12 @@ from lib import weather
 from lib.utils import *
 from . import ambientweatherpws
 from lib.suntime import Sun
+from ..yahoo import yahooutils
 
 # ambientweather.net list devices api - used for both identifying devices and retrieving most recent data
 # can also get stored data by specifying mac address, but that data can be from 5 - 30 minutes old
 # 'https://api.ambientweather.net/v1/devices/MACADDRESS?applicationKey=%s&apiKey=%s'
+
 AWPWSLCURL = 'https://api.ambientweather.net/v1/devices?applicationKey=%s&apiKey=%s'
 
 AWPWSADD = ADDON.getSettingBool('AWpwsAdd')
@@ -70,9 +72,13 @@ def get_forecast(ylcurl, yfcurl, app, api, locid, lat, lon):
     url = ylcurl % dataaw['info']['coords']['address']
     woedata = weather.Multi.get_data(url)
     locid = woedata[0]['woeid']
-    url = yfcurl % locid
+    ycookie, ycrumb = yahooutils.get_ycreds()
+    if not ycookie:
+        log('no cookie')
+    url = yfcurl.format(crumb=ycrumb, woeid=locid)
+
     while (retry < 6) and (not weather.MyMonitor().abortRequested()):
-        data = weather.Multi.get_data(url)
+        data = weather.Multi.get_data(url, ycookie, ycrumb)
         if data:
             break
         else:

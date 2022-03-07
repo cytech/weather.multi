@@ -6,7 +6,11 @@ class Weather():
         pass
 
     def get_weather(response, loc):
-        data = response['weathers'][0]
+        try: #TODO temp workaround, can be removed in future versions
+            data = response['weathers'][0]
+        except:
+            ADDON.setSettingString('ystamp', '') #this will force multiweather to retrieve a new crumb next time
+            return
         # current - standard
         set_property('Location', loc)
         set_property('Updated',
@@ -65,7 +69,7 @@ class Weather():
                          convert_temp(item['temperature']['now'], 'F') + TEMPUNIT)
             set_property('Hourly.%i.FeelsLike' % (count + 1),
                          convert_temp(item['temperature']['feelsLike'], 'F') + TEMPUNIT)
-            set_property('Hourly.%i.Outlook' % (count + 1), str(item['conditionDescription']))
+            set_property('Hourly.%i.Outlook' % (count + 1), OUTLOOK.get(str(item['conditionCode']), str(item['conditionDescription'])))
             set_property('Hourly.%i.OutlookIcon' % (count + 1), '%s.png' % str(item['conditionCode']))
             set_property('Hourly.%i.FanartCode' % (count + 1), str(item['conditionCode']))
             set_property('Hourly.%i.Humidity' % (count + 1), str(item['humidity']) + '%')
@@ -79,14 +83,19 @@ class Weather():
         set_property('Hourly.IsFetched', 'true')
 
     def get_daily_weather(response):
-        data = response['weathers'][0]
+        # data = response['weathers'][0]
+        try: #TODO temp workaround, can be removed in future versions
+            data = response['weathers'][0]
+        except:
+            ADDON.setSettingString('ystamp', '') #this will force multiweather to retrieve a new crumb next time
+            return
         # daily - standard
         for count, item in enumerate(data['forecasts']['daily']):
             set_property('Day%i.Title' % count,
                          convert_datetime(item['observationTime']['weekday'], 'day', 'weekday', 'long'))
             set_property('Day%i.HighTemp' % count, convert_temp(item['temperature']['high'], 'F', 'C'))
             set_property('Day%i.LowTemp' % count, convert_temp(item['temperature']['low'], 'F', 'C'))
-            set_property('Day%i.Outlook' % count, item['conditionDescription'])
+            set_property('Day%i.Outlook' % count, OUTLOOK.get(str(item['conditionCode']), str(item['conditionDescription'])))
             set_property('Day%i.OutlookIcon' % count, '%s.png' % str(item['conditionCode']))
             set_property('Day%i.FanartCode' % count, str(item['conditionCode']))
             if count == MAXDAYS:

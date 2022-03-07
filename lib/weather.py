@@ -69,12 +69,15 @@ class Multi:
         return location, locationid, locationlat, locationlon
 
     @staticmethod
-    def get_data(url):
+    def get_data(url, cookie='', crumb=''):
         headers = {
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                           'Chrome/89.0.4389.72 Safari/537.36'}
         try:
-            response = requests.get(url, headers=headers, timeout=10)
+            if cookie:
+                response = requests.get(url, headers=headers, cookies=dict(B=cookie), timeout=10)
+            else:
+                response = requests.get(url, headers=headers, timeout=10)
             return response.json()
         except:
             return

@@ -1,4 +1,7 @@
 v0.0.12
+- merge weather.multi fork changes (see below) and apply to providers
+
+v0.0.12
 - language update
 
 v0.0.11

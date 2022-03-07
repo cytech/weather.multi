@@ -1,4 +1,8 @@
-Fork  
+Fork
+v0.0.12
+- merge weather.multi fork changes and apply to providers
+- fork changes for Yahoo crumb issue
+
 v1.0.4
 - correct issue with millisecond timestamp conversion on raspberry pi  
 
