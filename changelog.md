@@ -1,4 +1,7 @@
 Fork
+v0.0.13
+- fix yahoo weather again
+
 v1.0.12
 - merge weather.multi fork changes and apply to providers
 - fork changes for Yahoo crumb issue

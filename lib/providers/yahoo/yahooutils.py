@@ -5,6 +5,7 @@ from . import yahoo
 # yahoo news-weather api
 # LCURL for location search by text (city, address, etc)
 # FCURL for forecast based on woeids
+CURL = 'https://www.yahoo.com/'
 YURL = 'https://www.yahoo.com/news/weather/'
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
 FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;crumb={crumb};woeids=%5B{woeid}%5D'
@@ -45,7 +46,7 @@ def get_forecast(loc, locid):
     url = FCURL.format(crumb=ycrumb, woeid=locid)
 
     while (retry < 6) and (not weather.MyMonitor().abortRequested()):
-        data = weather.Multi.get_data(url, ycookie, ycrumb)
+        data = weather.Multi.get_data(url, ycookie)
         if data:
             break
         else:
@@ -72,7 +73,7 @@ def get_ycreds():
         try:
             retry = 0
             while (retry < 6) and (not weather.MyMonitor().abortRequested()):
-                response = requests.get(YURL, headers=HEADERS, timeout=10)
+                response = requests.get(CURL, headers=HEADERS, timeout=10)
                 if response.status_code == 200:
                     break
                 else:
@@ -80,6 +81,7 @@ def get_ycreds():
                     retry += 1
                     log('getting cookie failed')
             ycookie = response.cookies['B']
+            response = requests.get(YURL, headers=HEADERS, cookies=dict(B=ycookie), timeout=10)
             match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
             ycrumb = codecs.decode(match.group(1), 'unicode-escape')
             ystamp = time.time()

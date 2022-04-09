@@ -78,7 +78,7 @@ def get_forecast(ylcurl, yfcurl, app, api, locid, lat, lon):
     url = yfcurl.format(crumb=ycrumb, woeid=locid)
 
     while (retry < 6) and (not weather.MyMonitor().abortRequested()):
-        data = weather.Multi.get_data(url, ycookie, ycrumb)
+        data = weather.Multi.get_data(url, ycookie)
         if data:
             break
         else:
