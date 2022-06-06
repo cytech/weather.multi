@@ -70,14 +70,12 @@ class Multi:
 
     @staticmethod
     def get_data(url, cookie=''):
-        headers = {
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/89.0.4389.72 Safari/537.36'}
+        HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36','Accept': 'text/html,application/xhtml+xml,application/xml'}
         try:
             if cookie:
-                response = requests.get(url, headers=headers, cookies=dict(B=cookie), timeout=10)
+                response = requests.get(url, headers=HEADERS, cookies=dict(A1=cookie), timeout=10)
             else:
-                response = requests.get(url, headers=headers, timeout=10)
+                response = requests.get(url, headers=HEADERS, timeout=10)
             return response.json()
         except:
             return
