@@ -1,4 +1,7 @@
 Fork
+v0.0.16
+- fix yahoo weather again
+
 v0.0.15
 - bump for repo release
 
