@@ -94,6 +94,9 @@ def get_ycreds():
                 ycookie = response.cookies['A1S'].replace('&j=GDPR', '')
             response = requests.get(YURL, headers=HEADERS, cookies=dict(A1=ycookie), timeout=10)
             match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
+            if not match:
+                match = re.search("win.YAHOO.context.crumb = '(.*?)'", response.text, re.IGNORECASE)
+#               match = re.search('type="hidden" name="crumb" value="(.*?)"', response.text, re.IGNORECASE)
             ycrumb = codecs.decode(match.group(1), 'unicode-escape')
             ystamp = time.time()
             ADDON.setSettingString('ycookie', ycookie)
