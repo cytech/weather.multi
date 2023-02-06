@@ -1,3 +1,9 @@
+v1.0.18
+- fixed en_gb/strings.po translation
+
+v1.0.17
+- fix yahoo weather again
+
 Fork
 v0.0.16
 - fix yahoo weather again

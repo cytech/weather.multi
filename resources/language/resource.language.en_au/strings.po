@@ -455,3 +455,47 @@ msgstr ""
 msgctxt "#32307"
 msgid "Waning Crescent"
 msgstr ""
+
+msgctxt "#32308"
+msgid "Use Wunderground PWS API for current PWS data"
+msgstr ""
+
+msgctxt "#32309"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#32310"
+msgid "Get Wunderground PWS api key -> wunderground.com/member/api-keys"
+msgstr ""
+
+msgctxt "#32313"
+msgid "Enter the nearest city or\n'wupws:CITY' For WundergroundPWS"
+msgstr ""
+
+msgctxt "#32314"
+msgid "Use AmbientWeather PWS API for current PWS data"
+msgstr ""
+
+msgctxt "#32315"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#32316"
+msgid "Get AmbientWeather PWS API/APP key -> ambientweather.net/account"
+msgstr ""
+
+msgctxt "#32317"
+msgid "Enter the nearest city or\n'awpws' For AmbientWeatherPWS"
+msgstr ""
+
+msgctxt "#32318"
+msgid "APP Key"
+msgstr ""
+
+msgctxt "#32319"
+msgid "Enter the nearest city or\n'wupws:CITY' for Wunderground, 'awpws' for AmbientWeather"
+msgstr ""
+
+msgctxt "#32320"
+msgid "Removed selected location"
+msgstr ""
