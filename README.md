@@ -4,6 +4,7 @@ This fork adds providers for:
 Weather Underground PWS users  
 AmbientWeather.net PWS users  
 :+1: If you find this provider useful, feel free to buy me a beer: https://paypal.me/cytecheng
+NOTE: v1.0.19 - Openweathermap failing in Kodi Nexus ! turn it off in addon settings and reboot Kodi!
 
 Note: Only the en_gb translation file is correct for this addon. All other translations will show missing information in the addon configuration.  
 Feel free to update the other translations using en_gb as the base...
