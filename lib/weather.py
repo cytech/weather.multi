@@ -17,8 +17,17 @@ class Multi:
             self.search_location(mode)
         else:
             location, locationid, locationlat, locationlon = self.get_location(mode)
+            log('location: %s' % (location))
+            log('location id: %s' % (locationid))
+            # if locationid > 0:
+            # default value is string of "-1" when not configured.
+            # original ronie weather-multi has changed this to an integer
             if locationid != '-1':
-                self.get_forecast(location, locationid, locationlat, locationlon)
+                ycookie, ycrumb = yahooutils.get_ycreds()
+                if not ycookie:
+                    log('no cookie')
+                else:
+                    self.get_forecast(location, locationid, locationlat, locationlon, ycookie, ycrumb)
             else:
                 log('empty location id')
                 self.clear_props()
@@ -73,14 +82,14 @@ class Multi:
         HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36','Accept': 'text/html,application/xhtml+xml,application/xml'}
         try:
             if cookie:
-                response = requests.get(url, headers=HEADERS, cookies=dict(A1=cookie), timeout=10)
+                response = requests.get(url, headers=HEADERS, cookies=dict(A3=cookie), timeout=10)
             else:
                 response = requests.get(url, headers=HEADERS, timeout=10)
             return response.json()
         except:
             return
 
-    def get_forecast(self, loc, locid, lat, lon):
+    def get_forecast(self, loc, locid, lat, lon, ycookie='', ycrumb=''):
         set_property('WeatherProviderLogo', xbmcvfs.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
         log('weather location: %s' % locid)
 
@@ -105,7 +114,7 @@ class Multi:
             openweathermap.Weather.get_weather(lat, lon, openweathermap.ZOOM, openweathermap.MAPID)
 
         if weatherbit.WADD and weatherbit.APPID:
-            daily_string = 'forecast/daily?key=%s&lat=%s&lon=%s' % (weatherbit.APPID, lat, lon)
+            daily_string = 'forecast/daily?lat=%s&lon=%s&key=%s' % (lat, lon, weatherbit.APPID)
             url = weatherbit.AURL % daily_string
             add_weather = self.get_data(url)
             log('weatherbit data: %s' % add_weather)

@@ -63,6 +63,7 @@ def get_forecast(loc, locid):
 
 
 def get_ycreds():
+    ysess = requests.Session()
     ycookie = ADDON.getSettingString('ycookie')
     ycrumb = ADDON.getSettingString('ycrumb')
     ystamp = ADDON.getSettingString('ystamp')
@@ -73,26 +74,25 @@ def get_ycreds():
         try:
             retry = 0
             while (retry < 6) and (not weather.MyMonitor().abortRequested()):
-                response = requests.get(CURL, headers=HEADERS, timeout=10)
+                response = ysess.get(CURL, headers=HEADERS, timeout=10)
                 if response.status_code == 200:
                     break
                 else:
                     weather.MyMonitor().waitForAbort(10)
                     retry += 1
                     log('getting yahoo website failed')
-            if 'consent' in response.url:  # EU users need to accept cookies
+            if 'consent' in response.url:  # EU users are asked for cookie consent
                 token = re.search('csrfToken" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
                 sessionid = re.search('sessionId" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
                 redirect = re.search('originalDoneUrl" value="(.*?)"', response.text, flags=re.DOTALL).group(1)
                 DATA = {'csrfToken': token, 'sessionId': sessionid, 'originalDoneUrl': redirect, 'namespace': 'yahoo',
-                        'agree': 'agree'}
-                posturl = 'https://consent.yahoo.com/v2/collectConsent?sessionId=%s' % sessionid
-                response = requests.post(posturl, headers=HEADERS, data=DATA)
+                        'reject': 'reject'}
+                response = ysess.post(response.url, headers=HEADERS, data=DATA)
             try:
-                ycookie = response.cookies['A1']
+                ycookie = response.cookies['A3']
             except:
-                ycookie = response.cookies['A1S'].replace('&j=GDPR', '')
-            response = requests.get(YURL, headers=HEADERS, cookies=dict(A1=ycookie), timeout=10)
+                ycookie = response.cookies['A1']
+            response = ysess.get(YURL, headers=HEADERS, cookies=dict(A3=ycookie), timeout=10)
             match = re.search('WeatherStore":{"crumb":"(.*?)","weathers', response.text, re.IGNORECASE)
             if not match:
                 match = re.search("win.YAHOO.context.crumb = '(.*?)'", response.text, re.IGNORECASE)

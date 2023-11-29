@@ -1,3 +1,9 @@
+v0.0.20
+- fix weatherbit
+
+v1.0.19
+- fix yahoo weather again
+
 v1.0.18
 - fixed en_gb/strings.po translation
 
