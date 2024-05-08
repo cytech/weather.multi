@@ -1,4 +1,19 @@
-v0.0.20
+v1.0.25
+- reinit session with each new url
+
+v1.0.24
+- try multiple yahoo urls in order to get cookie
+
+v1.0.23
+- fix yahoo weather again
+
+v1.0.22
+- fix weatherbit ozone value could be none
+
+v1.0.21
+- fix getting yahoo cookie
+
+v1.0.20
 - fix weatherbit
 
 v1.0.19
