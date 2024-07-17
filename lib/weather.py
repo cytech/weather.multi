@@ -23,7 +23,9 @@ class Multi:
             # default value is string of "-1" when not configured.
             # original ronie weather-multi has changed this to an integer
             if locationid != '-1':
-                ycookie, ycrumb = yahooutils.get_ycreds()
+                # ycookie, ycrumb = self.get_ycreds()
+                ycookie = ADDON.getSettingString('ycookie')
+                ycrumb = ADDON.getSettingString('ycrumb')
                 if not ycookie:
                     log('no cookie')
                 else:

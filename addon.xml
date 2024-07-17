@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.multi" name="Multi Weather" version="1.0.25" provider-name="cytech">
+<addon id="weather.multi" name="Multi Weather" version="1.0.27" provider-name="cytech">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.openweathermap.maps" version="1.0.4"/>
@@ -19,6 +19,7 @@
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
+		<lifecyclestate type="broken" lang="en_GB">Yahoo no longer provides weather data to new users</lifecyclestate>
 		<news>- fork of https://gitlab.com/ronie/weather.multi to add WundergroundPWS and AmbientPWS </news>
 	</extension>
 </addon>

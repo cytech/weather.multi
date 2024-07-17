@@ -1,3 +1,10 @@
+v1.0.27
+- disable cookie expiration
+- Yahoo no longer provides weather data to new users
+
+v1.0.26
+- language update
+
 v1.0.25
 - reinit session with each new url
 

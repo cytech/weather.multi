@@ -9,7 +9,7 @@ class Weather():
         try: #TODO temp workaround, can be removed in future versions
             data = response['weathers'][0]
         except:
-            ADDON.setSettingString('ystamp', '') #this will force multiweather to retrieve a new crumb next time
+            #ADDON.setSettingString('ystamp', '') #this will force multiweather to retrieve a new crumb next time
             return
         # current - standard
         set_property('Location', loc)
